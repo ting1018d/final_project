@@ -1,0 +1,11 @@
+<!-- these msg is used by flash ()  -->
+<!-- only handle a string, not an array -->
+<!-- called by req.flash("success_msg", "xxx")-->
+{{#if success_msg}}
+<div class="alert alert-success">{{success_msg}}</div>
+{{/if}}
+
+<!-- call by req.flash("error_msg", "xxx") -->
+{{#if error_msg}}
+<div class="alert alert-danger">{{error_msg}}</div>
+{{/if}}

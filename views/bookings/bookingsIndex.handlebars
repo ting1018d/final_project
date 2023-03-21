@@ -1,0 +1,16 @@
+{{#each bookings}}
+  <div class="card card-body mb-2">
+    <h4>FACILITY     : {{facility}}</h4>
+    <h4>SESSION      : {{session}}</h4>
+    <h4>BOOKING DATE : {{bookingDate}}</h4>    
+    
+    <a href="/bookings/edit/{{_id}}" class="btn btn-success btn-block">Edit</a>
+    <form action="/bookings/{{_id}}?_method=DELETE" method="post">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <input type="submit" class="btn btn-warning 
+        btn-block" value="Delete" />
+    </form>
+  </div>
+{{else}}
+  <p>No data listed</p>
+{{/each}}

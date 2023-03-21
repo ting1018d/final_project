@@ -1,0 +1,40 @@
+is work
+<div class="card card-body">
+    <h3>Bookings</h3>
+    <form action="/bookings/add" method="post">
+      <div class="form-group">
+        <label for="facility">Title</label>
+        <input 
+            type="text" 
+            id="facility" 
+            class="form-control" 
+            name="facility"
+            value="{{facility}}"
+            required
+        /> 
+      </div>
+      <div class="form-group">
+        <label for="bookingDate">Details</label>
+        <input
+            type="date" 
+            id="bookingDate" 
+            class="form-control" 
+            name="bookingDate" 
+            value="{{Booking date}}"
+        ></input>
+      </div>
+
+      <div class="form-group">
+        <label for="session">Details</label>
+        <input
+            type="text" 
+            id="session" 
+            class="form-control" 
+            name="session" 
+            value="{{session}}"
+        ></input>
+      </div>
+
+      <button type="submit" class "btn btn-primary">Submit</button>
+    </form>
+  </div>

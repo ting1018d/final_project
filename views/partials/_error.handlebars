@@ -1,0 +1,10 @@
+<!-- handle the error messages when render the page,
+    errors is any array contains multiple error messages -->
+{{#each errors}}
+<div class="alert alert-danger">{{text}}</div>
+{{else}}
+{{/each}}
+
+{{#if fail_passport}}
+<div class="alert alert-danger">{{fail_passport}}</div>
+{{/if}}
