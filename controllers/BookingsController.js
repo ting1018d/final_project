@@ -48,8 +48,6 @@ export const postAddBookings = (req, res) => {
     console.log("booking date : ", req.body.bookingDate);
     console.log("session : ", req.body.session);
     
-    
-
     Booking.findOne ({facility : req.body.facility,    
         bookingDate : req.body.bookingDate, 
         session : req.body.session},function(err, result) {
@@ -71,7 +69,7 @@ export const postAddBookings = (req, res) => {
                       bookingDate : req.body.bookingDate,
                       session : req.body.session,
                       userID : res.locals.user._id,};
-                new Booking(newBooking).save().then(() => {
+                      new Booking(newBooking).save().then(() => {
                       req.flash("success_msg", "Booking Added!");
                       res.redirect("/");
                       });
@@ -98,33 +96,66 @@ export const getEditBookings = (req,res) => {
 }
 
 export const putEditBookings= (req, res) => {
-    Booking.findOne({
-        _id: req.params.id,
-    }).then(booking => {
-        let edit_error_msg = "";
-        if (!req.body.facility) {
-            edit_error_msg += "please add a facility." ;
-        }
-        if (!req.body.bookingDate) {
-            edit_error_msg += "please add a date.";
-        }
-        if (!req.body.session) {
-            edit_error_msg += "please add a session.";
-        }
+    let errors = [];
+    let save_booking_id = [];
+    save_booking_id.push(req.params.id);
+    console.log(save_booking_id); 
+//    Booking.deleteOne ({ _id: req.params.id})
+//    .then();
 
-        if (edit_error_msg) {
-            req.flash("error_msg", edit_error_msg);
-            res.redirect("/bookings/edit/"+booking._id);
-        } else
-        {
+    console.log("facility ", req.body.facility);
+    console.log("booking date ", req.body.bookingDate);
+    console.log("session ", req.body.session);
+    Booking.findOne ({facility : req.body.facility,    
+        bookingDate : req.body.bookingDate, 
+        session : req.body.session},function(err, result) {
+            if (err) throw err;
+            console.log (result);
+            if (result !== null)
+             {
+//                edit_error_msg += "Session already booked";
+//                req.flash("error_msg", edit_error_msg);
+//                res.redirect("/bookings/edit/"+booking._id);
+    
+                errors.push({text: "Session already booked"});
+                res.render("bookings/edit", {
+                errors : errors,
+                facility : req.body.facility,
+                bookingDate : req.body.bookingDate,
+                session : req.body.session,  
 
-        booking.facility = req.body.facility;
-        booking.bookingDate = req.body.bookingDate;
-        booking.session = req.body.session;
-        booking.save().then(()=> {
-            req.flash("success_msg", "Booking updated !");
-            res.redirect('/bookings');
+                });
+             }
+            else
+                {
+                    console.log("saved_booking_id ",save_booking_id);
+                    Booking.findOne({ _id: save_booking_id})
+                    .then(booking => {
+                        console.log(booking);
+                        booking.facility = req.body.facility;
+                        booking.bookingDate = req.body.bookingDate;
+                        booking.session = req.body.session;
+                        booking.save().
+                        then(()=> {
+                        req.flash("success_msg", "Booking updated !");
+                        res.redirect('/bookings');    
+                        });
+//                    Booking.deleteOne ({ _id: save_booking_id})
+//                    .then(
+//                        console.log("old booking deleted")
+//                    );
+
+//                    const newBooking = {
+//                      facility : req.body.facility,
+//                      bookingDate : req.body.bookingDate,
+//                      session : req.body.session,
+//                      userID : res.locals.user._id,};
+//                      new Booking(newBooking).save().then(() => {
+//                      req.flash("success_msg", "Booking Updated!");
+//                      res.redirect("/");
+//                      });
+
+                    });
+                };
         });
-        }
-    });
-}
+    }

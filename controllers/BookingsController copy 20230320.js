@@ -56,7 +56,7 @@ export const postAddBookings = (req, res) => {
             if (bookings !== null)
             {errors.push({text: "Session already booked"});} 
         });
-        
+
     console.log(errors);
     if (errors.length > 0)
         {
@@ -91,7 +91,7 @@ export const deleteBookings = (req,res) => {
 }
 
 export const getEditBookings = (req,res) => {
-    Idea.findOne ({ _id : req.params.id})
+    Booking.findOne ({ _id : req.params.id})
         .lean()
         .then((booking) => {
             res.render("bookings/edit", {booking: booking});
@@ -102,6 +102,7 @@ export const putEditBookings= (req, res) => {
     Booking.findOne({
         _id: req.params.id,
     }).then(booking => {
+        console.log("result", result);
         let edit_error_msg = "";
         if (!req.body.facility) {
             edit_error_msg += "please add a facility." ;
@@ -112,7 +113,7 @@ export const putEditBookings= (req, res) => {
         if (!req.body.session) {
             edit_error_msg += "please add a session.";
         }
-
+        console.log("edit_error_msg");
         if (edit_error_msg) {
             req.flash("error_msg", edit_error_msg);
             res.redirect("/bookings/edit/"+booking._id);
