@@ -7,6 +7,9 @@ import {
     deleteBookings,
     getEditBookings, 
     putEditBookings,
+    getRecords,
+    getAdmin,
+    postAdmin,
 } from "../controllers/BookingsController.js";
 import ensureAuthenticated from "../helpers/auth.js";
 
@@ -30,5 +33,10 @@ router.delete ("/:id", deleteBookings);
 //router.get("/edit/:id", getEditIdeas);
 //router.put("/edit/:id", putEditIdeas);
 router.route("/edit/:id").get(getEditBookings).put(putEditBookings);
+router.get("/records",getRecords);
+
+router.route("/admin")
+    .get(getAdmin)
+    .post(postAdmin);
 
 export default router;

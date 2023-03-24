@@ -14,11 +14,22 @@ const BookingSchema = new Schema ({
     userID : {
         type : mongoose.Types.ObjectId,
         /* required : true,  */
-    },
+    },    
     bookingDate : {
         type : Date,
         required: true,
-    }
+    },
+    remarks : {
+        type : String,
+        required: false,
+
+    },
+    userEmail : {
+        type : String,
+        required: false,
+
+    },
+
 });
 
 const Booking = mongoose.model("Bookings",BookingSchema);

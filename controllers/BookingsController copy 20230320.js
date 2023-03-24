@@ -74,6 +74,7 @@ export const postAddBookings = (req, res) => {
           bookingDate : req.body.bookingDate,
           session : req.body.session,
           userID : res.locals.user._id,
+          remarks : "client booking",
         };
         new Booking(newBooking).save().then(() => {
           req.flash("success_msg", "Booking Added!");

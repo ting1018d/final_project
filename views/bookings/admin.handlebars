@@ -1,0 +1,43 @@
+  {{#each errors}}
+  <div class="alert alert-danger">{{text}}</div>
+  {{else}}
+  {{/each}}
+  <div class="card card-body">
+    <h3>Bookings</h3>
+    <form action="/bookings/admin" method="post">
+      <div class="form-group">
+        <label for="facility">Facility</label>
+        <input 
+            type="text" 
+            id="facility" 
+            class="form-control" 
+            name="facility"
+            value="{{facility}}"
+            required
+        /> 
+      </div>
+      <div class="form-group">
+        <label for="maintStart">Maintenance Start</label>
+        <input
+            type="date" 
+            id="maintStart" 
+            class="form-control" 
+            name="maintStart" 
+            value="{{maintStart}}"
+        ></input>
+      </div>
+     
+      <div class="form-group">
+        <label for="maintEnd">Maintenance end</label>
+        <input
+            type="date" 
+            id="maintEnd" 
+            class="form-control" 
+            name="maintEnd" 
+            value="{{maintEnd}}"
+        ></input>
+      </div>
+
+      <button type="submit" class "btn btn-primary">Submit</button>
+    </form>
+  </div>

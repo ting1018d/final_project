@@ -40,6 +40,7 @@ app.set("view engine","handlebars");  // set view engine
 app.set("views","./views");           // set views in folder ./views
 app.use(morgan("tiny"));
 
+app.use(express.static("views/public"));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
@@ -66,6 +67,7 @@ app.use(function(req, res, next){
     res.locals.error_msg = req.flash("error_msg");
     res.locals.fail_passport = req.flash("fail_passport");
     res.locals.user = req.user || null;
+    console.log("user ==> ",res.locals.user);
 //    console.log ("===Login User===", res.locals.user);
 //    console.log ("success_msg", res.locals.success_msg);
 //    console.log ("error_msg", res.locals.error_msg);
