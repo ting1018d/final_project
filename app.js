@@ -67,12 +67,21 @@ app.use(function(req, res, next){
     res.locals.error_msg = req.flash("error_msg");
     res.locals.fail_passport = req.flash("fail_passport");
     res.locals.user = req.user || null;
+    if (req.user)  {
+//    console.log("req.user.admin => ",req.user.admin);
+    if (req.user.admin == true) {
+        res.locals.admin = true;
+    }
+    else {
+        res.locals.admin = false;
+    };
     console.log("user ==> ",res.locals.user);
+    };
+//    console.log("admin ==> ", res.locals.admin);
 //    console.log ("===Login User===", res.locals.user);
 //    console.log ("success_msg", res.locals.success_msg);
 //    console.log ("error_msg", res.locals.error_msg);
 //    console.log ("fail_passport", res.locals.fail_passport);
-
     next();
 })
 
@@ -84,6 +93,7 @@ app.get("/", (req,res) => {
 app.get("/about", (req, res) => {
     res.render("about");
 });
+
 
 import ensureAuthenticated from "./helpers/auth.js";
 app.use("/ideas", ensureAuthenticated, ideasRoute);

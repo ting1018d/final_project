@@ -38,6 +38,38 @@
         ></input>
       </div>
 
-      <button type="submit" class "btn btn-primary">Submit</button>
+      <button type="submit" class "btn btn-primary" name="action" value="addBooking">Add Booking</button>
+      <button type="submit" class "btn btn-primary" name="action" value="checkSessions">Available sessions</button>
+  
+      {{#if sessions}}
+    <div>
+    <table class="table table-striped table-hover">
+        <caption>Booked sessions</caption>
+        <thread>
+            <tr>
+                <th>Facility</th>
+                <th>Booking Date</th>
+                <th>Session</th>
+                <th>Status</th>
+                <th>Select</th>
+            </tr>
+        </thread>
+        <tbody>
+            {{#each sessions}}
+            <tr>
+                <td>{{facility}}</td>
+                <td>{{bookingDate}}</td>
+                <td>{{session}}</td>
+                <td>{{status}}</td>
+                <td>
+                 <input type="radio" class="form-check-input" id="radio" name="session_selected" value="{{session}}" checked>
+      <label class="form-check-label" for="radio"></label>
+
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>        
+    </table>
+{{/if}}
     </form>
   </div>

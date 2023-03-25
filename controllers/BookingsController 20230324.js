@@ -22,8 +22,6 @@ export const getAddBookings = (req, res) => {
 export const postAddBookings = (req, res) => {
     let bookingRemarks ="";
     console.log("admin :",res.locals.admin);
-    console.log("action :",req.body.action);
-    console.log("session selected: ",req.body.session_selected);
     if (res.locals.admin) {
         bookingRemarks = "admin booking"
     } else {
@@ -36,9 +34,9 @@ export const postAddBookings = (req, res) => {
     if (!req.body.bookingDate) {
         errors.push({text: "Please add a date"});
     }
-//    if (req.body.action == "addBooking" && !req.body.session) {
-//        errors.push({text: "Please add a session"});
-//    };
+    if (!req.body.session) {
+        errors.push({text: "Please add a session"});
+    }
     if (errors.length > 0) {
         res.render("bookings/add", {
             errors : errors,
@@ -47,7 +45,7 @@ export const postAddBookings = (req, res) => {
             session : req.body.session,
         });
     }
-    else if (req.body.action == "addBooking")
+    else
     {    
     Booking.findOne ({facility : req.body.facility,    
         bookingDate : req.body.bookingDate, 
@@ -68,7 +66,7 @@ export const postAddBookings = (req, res) => {
                 const newBooking = {
                       facility : req.body.facility,
                       bookingDate : req.body.bookingDate,
-                      session : req.body.session_selected,
+                      session : req.body.session,
                       userID : res.locals.user._id,
                       remarks : bookingRemarks,
                       userEmail : res.locals.user.email,};
@@ -79,53 +77,9 @@ export const postAddBookings = (req, res) => {
                 };
             });
     
-// console.log("errors =>", errors);
-    } 
-    else 
-//  action == "checkSessions"    
-    {  
-        Booking.find({facility : req.body.facility,    
-            bookingDate : req.body.bookingDate, 
-            },{_id:0,session:1})
-        .lean()
-        .sort({bookingDate: 1, session: 1})
-        .then(booked_sessions => {
-
-            booked_sessions.forEach(simplify);
-
-            function simplify(item, index, arr) {
-            arr [index] = Number(item.session);
-            } 
-            console.log("simplified booked session",booked_sessions);
-            
-            let sessions = [];
-            let booked_status = "";
-            for (let i = 1; i < 15; i++) 
-            { 
-            if (booked_sessions.includes(i))
-                {booked_status = "booked"}
-            else{
-                booked_status = "available";
-            };
- 
-            sessions[i] = {facility:"TS01",
-                     bookingDate:"03/02/2023", 
-                     session: i,
-                     status : booked_status,
-                    };
-    };
-
-            res.render("bookings/add",{
-                errors : errors,
-                facility : req.body.facility,
-                bookingDate : req.body.bookingDate,
-                session : req.body.session,
-                sessions: sessions
-     });
-        });
-    }; 
-}       
-
+//    console.log("errors =>", errors);
+    }          
+}
     
 export const deleteBookings = (req,res) => {
     Booking.deleteOne ({ _id: req.params.id})
@@ -245,7 +199,6 @@ export const getRecords = (req, res) => {
                 }
               ])
             .then(records => {
-            console.log("All booking records", records);
             res.render("bookings/records",{records: records})
         }); 
     }

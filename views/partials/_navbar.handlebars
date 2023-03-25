@@ -1,6 +1,5 @@
   <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
   <div class="container">
-    <h5>User Name {{username}}</h5  >
   <a class="navbar-brand" href="/">Notes Sites</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -15,7 +14,21 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+      {{#if admin}}
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          Admin
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/bookings/admin">Maintenance</a>
+          <a class="dropdown-item" href="/bookings/records">All bookings</a>
+        </div>
+      </li>
+      {{else}}
+      {{/if}}
+      
       {{#if user}}
+
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           Notes
@@ -32,9 +45,6 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" href="/bookings/add">Add Bookings</a>
           <a class="dropdown-item" href="/bookings">Bookings</a>
-          <a class="dropdown-item" href="/bookings/records">Show all bookings</a>
-          <a class="dropdown-item" href="/bookings/admin">Admin</a>
-
         </div>
       </li>
 
